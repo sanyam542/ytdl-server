@@ -3,11 +3,10 @@ const ytdl = require("ytdl-core");
 const cors = require("cors");
 
 const app = express();
-app.use(
-  cors({
-    origin: ["http://localhost:3000", ""],
-  })
-);
+app.use(cors());
+// {
+//     origin: ["http://localhost:3000", ""],
+//   }
 app.get("/load", async (req, res) => {
   const v_id = await ytdl.getURLVideoID(req.query.url);
   const info = await ytdl.getInfo(req.query.url);
@@ -23,6 +22,12 @@ app.get("/load", async (req, res) => {
   };
 
   return res.send(data);
+});
+
+app.post("/data", (req, res) => {
+  data = req.body;
+  console.log(data);
+  res.send(data);
 });
 
 app.get("/download", async (req, res) => {
